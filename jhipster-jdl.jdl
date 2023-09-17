@@ -1,0 +1,38 @@
+// Define the Book entity with relevant fields for a book e-commerce
+entity Book {
+  title String required
+  author String
+  publicationYear Integer
+  genre String
+  price Double required
+  quantityInStock Integer required
+}
+
+// Entity for customer information
+entity Customer {
+  name String required
+  email String required
+  address String
+  phone String
+}
+
+// Define a shopping cart with a OneToMany relationship to Book
+entity ShoppingCart {
+  purchaseDate Instant required
+  status String required
+}
+
+relationship OneToMany {
+  ShoppingCart{books} to Book{shoppingCarts}
+}
+
+// Define an Order with ManyToOne relationships to ShoppingCart and Customer
+entity Order {
+  orderDate Instant required
+  status String required
+}
+
+relationship ManyToOne {
+  ShoppingCart{order} to Order{shoppingCart}
+  Customer{orders} to Order{customer}
+}
